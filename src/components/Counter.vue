@@ -1,14 +1,18 @@
 <template>
   <h2>{{ customTitle }}</h2>
   <p> {{ counter }} <sup>2</sup> = {{ squareCounter }} </p>
+  
+  <p data-testid="counter">{{ counter }}</p>
 
-  <div>
+  <div class="buttons-comtainer">
     <button @click="increase">+1</button>
-    <button @click="decrease">-2</button>
+    <button @click="decrease">-1</button>
   </div>
 </template>
 
 <script>
+import { thisTypeAnnotation } from '@babel/types'
+
 export default {
     props: {
         title: String,
@@ -38,7 +42,8 @@ export default {
             /* this.counter++ */
         },
         decrease() {
-            this.counter --
+            /* this.counter -- */
+            this.counter = this.counter - 1
         }
     },
     computed: {

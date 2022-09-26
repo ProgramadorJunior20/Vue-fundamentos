@@ -32,13 +32,21 @@ export default {
     },
     methods: {
         async getAnswer() {
-            this.answer = 'Pensando...'
+            try {
 
-            const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
-            /* console.log({ answer, image }) */
+                this.answer = 'Pensando...'
 
-            this.answer = answer === 'yes' ? 'Si!' : 'No!'
-            this.img = image
+                const { answer, image } = await fetch('https://yesno.wtf/api').then( r => r.json() )
+                /* console.log({ answer, image }) */
+
+                this.answer = answer === 'yes' ? 'Si!' : 'No!'
+                this.img = image
+
+            } catch (error) {
+                console.log('IndecisionComponent: ', error );
+                this.answer = 'No se pudo cargar del API'
+                this.img    = null
+            }
         }
     },
     watch: {
@@ -46,7 +54,11 @@ export default {
 
             this.isValidQuestion = false
 
+            console.log({ value })
+
             if( !value.includes('?') ) return
+
+            console.log({ value })
 
             this.isValidQuestion = true
 
